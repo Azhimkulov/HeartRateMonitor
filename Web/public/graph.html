@@ -1,0 +1,85 @@
+  <html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+    var ref = new Firebase("https://heartbeatratemanager.firebaseio.com/");
+// Attach an asynchronous callback to read the data at our posts reference
+
+    ref.on("value", function(snapshot) {
+        console.log(snapshot.val())
+        var telo = snapshot.val();
+        var list = [];
+        var rate = 0;
+
+        var link = telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.Example;
+
+        var name = JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.name);
+        var surname = JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.surname);
+
+        var birthDay = JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.birthDay)+JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.birthMonth)+JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.birthYear);
+        document.getElementById("teloName").innerHTML = name;
+        document.getElementById("teloSurname").innerHTML = surname;
+        document.getElementById("teloBirthday").innerHTML = birthDay;
+
+        var length = Object.keys(link).length;
+
+        for (var i = 0; i < length; i++) 
+        {
+          if (link[i]!=null) 
+          {
+            var toChild = JSON.stringify(link[i]);
+            var rate = parseInt(toChild);
+            list.push(rate);
+          }
+        }
+
+        length = Object.keys(list).length;
+
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+          var data = new google.visualization.DataTable();
+            data.addColumn('number', 'Intesiv');
+            data.addColumn('number', 'EKG');
+            data.addRows(0, 0)
+
+            for (var i = 1; i <= length; i++) 
+            {
+              data.addRows([[i, list[i]]])
+            }
+
+          var options = {
+            title: 'EKG Graph',
+            curveType: 'function',
+            legend: { position: 'bottom' },
+
+            explorer: { 
+            actions: ['dragToZoom', 'rightClickToReset'],
+            axis: 'horizontal',
+            keepInBounds: true,
+            maxZoomIn: 20.0},
+          };
+
+          var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+          chart.draw(data, options);
+        }
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+    </script>
+  </head>
+  <body>
+    <div id="curve_chart" style="width: 100%; height: 500px"></div>
+
+    <p id="teloName"></p>
+
+    <p id="teloSurname"></p>
+
+    <p id="teloBirthday"></p>
+  </body>
+</html>

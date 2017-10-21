@@ -1,0 +1,87 @@
+<!DOCTYPE html>  
+ <html lang="en">  
+ <head>  
+   <title>FirebaseAuthForWeb</title>  
+   <meta charset="UTF-8">  
+ </head>  
+ <!-- ИНИЦИАЛИЗАЦИЯ FIREBASE НАЧАЛО. ВСТАВЬТЕ СВОЙ КОД ИЗ КОНСОЛИ FIREBASE СЮДА-->
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBB0txdfH77ShFuHXQUKltBWGv23uu3noQ",
+    authDomain: "doctorprofile-78928.firebaseapp.com",
+    databaseURL: "https://doctorprofile-78928.firebaseio.com",
+    projectId: "doctorprofile-78928",
+    storageBucket: "doctorprofile-78928.appspot.com",
+    messagingSenderId: "990483502947"
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
+  
+    var ref = new Firebase("https://heartbeatratemanager.firebaseio.com/");
+
+    ref.on("value", function(snapshot) {
+        console.log(snapshot.val());
+
+        let data = snapshot.val();
+        let dataWithKeys = Object.keys(data).map((key) => {
+        var obj = data[key];
+        obj._key = key;
+        return obj;
+        });
+        console.log(dataWithKeys);
+        console.log(dataWithKeys[0]._key);
+        var length = Object.keys(dataWithKeys).length;
+
+        var test=document.createElement('section');
+        test.setAttribute('id','test');
+
+        var ul=document.createElement('ul');
+
+
+        document.body.appendChild(test);
+        test.appendChild(ul);
+
+        for (var i=0; i<length; i++){
+
+        var li=document.createElement('li');
+
+        ul.appendChild(li);
+        li.innerHTML=li.innerHTML + dataWithKeys[i]._key;
+
+        }
+
+
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+</script>
+ <body>  
+ <!-- Простой пример скрипта для добавление текста к странице который отображаем имя пользователя и email -->
+ <script>  
+ // Следим за UID (уникальный номер) пользователя
+ var currentUid = null;  
+ firebase.auth().onAuthStateChanged(function(user) {  
+  // Слушатель onAuthStateChanged срабатывает каждый раз когда токен пользователя меняется
+  // Это может случиться когда уже новый пользователь логинится, например.
+  // Или это также может случиться когда токен пользователя истек
+  if (user && user.uid != currentUid) {  
+    // Обноваляем UI когда новый пользователь логинится
+    // В другом случае игнорируем если это обновление токена
+    // Обновляем UID текущего пользователя 
+   currentUid = user.uid;  
+  } else {  
+    // Операция выхода из приложения. Переустанавливает UID текущего пользователя
+   currentUid = null;  
+  }
+ });  
+ </script>  
+ <h1>Кабинет врача</h1>
+
+ <a href="write.html">WRITE LINK</a>
+ <a href="read.html">READ LINK</a>
+ </body>
+ </html>

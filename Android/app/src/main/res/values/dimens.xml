@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pdg_et_auth">15dp</dimen>
+    <dimen name="mrgn_et_auth">10dp</dimen>
+    <dimen name="auth_register_text">17dp</dimen>
+    <dimen name="pdg_button_size">25dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

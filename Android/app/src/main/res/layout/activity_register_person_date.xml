@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@color/background"
+    tools:context="com.example.azamat.heartbeatratemanager.RegisterPersonDateActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:textSize="@dimen/auth_register_text"
+        android:textColor="#000"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="@string/person_date_text"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:paddingLeft="@dimen/pdg_et_auth"
+        android:layout_marginBottom="@dimen/mrgn_et_auth"
+        android:background="@drawable/et_auth"
+        android:hint="@string/et_name_person_date"
+        android:id="@+id/et_name_register"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:paddingLeft="@dimen/pdg_et_auth"
+        android:layout_marginBottom="@dimen/mrgn_et_auth"
+        android:background="@drawable/et_auth"
+        android:hint="@string/et_surname_person_date"
+        android:id="@+id/et_surname_register"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:paddingLeft="@dimen/pdg_et_auth"
+        android:layout_marginBottom="@dimen/mrgn_et_auth"
+        android:background="@drawable/et_auth"
+        android:hint="@string/et_lastname_person_date"
+        android:id="@+id/et_lastname_confirm"/>
+
+        <!--<RadioGroup-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_weight="1.25">-->
+
+            <!--<RadioButton-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:textAlignment="center"-->
+                <!--android:checked="true"-->
+                <!--android:text="Я пациент"/>-->
+
+            <!--<RadioButton-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:textAlignment="center"-->
+                <!--android:text="Я доктор"/>-->
+
+        <!--</RadioGroup>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/pdg_button_size"
+            android:background="@drawable/btn_auth"
+            android:textColor="#fff"
+            android:layout_gravity="bottom"
+            android:text="@string/ready"
+            android:id="@+id/btn_add_person_date"/>
+    </LinearLayout>
+
+</LinearLayout>

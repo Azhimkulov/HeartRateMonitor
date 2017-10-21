@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">HeartBeatRateManager</string>
+    <string name="btn_sign_in_register">Einloggen</string>
+    <string name="btn_register">Sich anmelden</string>
+    <string name="et_email_register">Geben Sie Ihre Email bitte</string>
+    <string name="et_password_register">Geben Ihre Password bitte</string>
+    <string name="et_password_confirm">Ihre Password noch ein mal</string>
+    <string name="auth_text">Einloggen zum Ihre Personal Cabinet oder anmelden Sie sich.</string>
+
+    <string name="register_text">Bitte erfinden Sie einzigartig Email und Password</string>
+    <string name="next">Witer</string>
+    <string name="ready">Fertig</string>
+
+    <string name="person_date_text">Bitte geben Sie Ihre persönliche Informationen</string>
+    <string name="et_name_person_date">Ihre Vorname</string>
+    <string name="et_surname_person_date">Ihre Nachname</string>
+    <string name="et_lastname_person_date">Ihre Vatersname</string>
+    <string name="title_activity_measure_date_list">MeasureDateListActivity</string>
+
+</resources>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>WRITE</title>
+</head>
+<body>
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+
+
+
+<script>  
+ // Следим за UID (уникальный номер) пользователя
+ 
+  var ref = new Firebase("https://doctorprofile-78928.firebaseio.com/");
+  var usersRef = ref.child("users");
+  var great = ref.child("my")
+    great.push("sdasdsavas")
+    usersRef.set({
+      alanisawesome: {
+        date_of_birth: "June 23, 1912",
+        full_name: "Alan Turing"
+  },
+      gracehop: {
+        date_of_birth: "December 9, 1906",
+        full_name: "Grace Hopper"
+  }
+});
+ </script>  
+	
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>READ</title>
+</head>
+<body>
+	<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+
+
+	<script>
+    var ref = new Firebase("https://heartbeatratemanager.firebaseio.com/LOrpGTVX28cdxcwWC4gVRX0GUKE3/Measure Dates");
+// Attach an asynchronous callback to read the data at our posts reference
+		ref.on("value", function(snapshot) {
+  			console.log(snapshot.val());
+  			var telo = snapshot.val();
+
+  			// var text = JSON.stringify(telo.users.alanisawesome.full_name);
+  			//  var birthday = JSON.stringify(telo.users.alanisawesome.date_of_birth);
+
+  			// for (var i = 0; i < Object.keys(telo.users).length; i++) 
+  			// {
+  			// 	var text = JSON.stringify(telo.users.alanisawesome.full_name);
+  			//  	var birthday = JSON.stringify(telo.users.alanisawesome.date_of_birth);
+  			// }
+
+  			// document.getElementById("teloName").innerHTML = text;
+  			// document.getElementById("date_of_birth").innerHTML = birthday;
+
+        let data = snapshot.val();
+        let dataWithKeys = Object.keys(data).map((key) => {
+        var obj = data[key];
+        obj._key = key;
+        return obj;
+        });
+        console.log(dataWithKeys);
+
+		}, function (errorObject) {
+  			console.log("The read failed: " + errorObject.code);
+		});
+	</script>
+
+<p id="teloName"></p>
+
+<p id="date_of_birth"></p>
+
+<a href="graph.html">GRAPH VIEW</a>
+
+
+</body>
+</html>

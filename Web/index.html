@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBB0txdfH77ShFuHXQUKltBWGv23uu3noQ",
+    authDomain: "doctorprofile-78928.firebaseapp.com",
+    databaseURL: "https://doctorprofile-78928.firebaseio.com",
+    projectId: "doctorprofile-78928",
+    storageBucket: "",
+    messagingSenderId: "990483502947"
+  };
+  firebase.initializeApp(config);
+</script>
+<script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>  
+   <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />  
+   <script type="text/javascript">  
+    var uiConfig = {  
+     signInSuccessUrl: 'loggedIn.html',  
+     signInOptions: [  
+      // Указываем провайдеров для Firebase Аутентификации
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,  
+      firebase.auth.EmailAuthProvider.PROVIDER_ID  
+     ],  
+     // Здесь вы можете специфировать условия к использованию, которые будут показаны при виджете 
+     tosUrl: '<your-tos-url>'  
+    };  
+    // Инициализирум FirebaseUI виджет   
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());  
+    // Для начала методы мы подождем пока html полностью загрузиться
+    ui.start('#firebaseui-auth-container', uiConfig);  
+ </script>  
+ <!-- Здесь можно поставить фоновую картинку и сообщение  -->  
+  <div></div>  
+  <body>  
+       <h1 align="center">Firebase Аутентификация для Web</h1>  
+        <div id="firebaseui-auth-container"></div>  
+  </body>  
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>  
+ <html lang="en">  
+ <head>  
+   <title>FirebaseAuthForWeb</title>  
+   <meta charset="UTF-8">  
+ </head>  
+ <!-- ИНИЦИАЛИЗАЦИЯ FIREBASE НАЧАЛО. ВСТАВЬТЕ СВОЙ КОД ИЗ КОНСОЛИ FIREBASE СЮДА-->
+<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBB0txdfH77ShFuHXQUKltBWGv23uu3noQ",
+    authDomain: "doctorprofile-78928.firebaseapp.com",
+    databaseURL: "https://doctorprofile-78928.firebaseio.com",
+    projectId: "doctorprofile-78928",
+    storageBucket: "",
+    messagingSenderId: "990483502947"
+  };
+  firebase.initializeApp(config);
+</script>
+ <body>  
+ <!-- Простой пример скрипта для добавление текста к странице который отображаем имя пользователя и email -->
+ <script>  
+ // Следим за UID (уникальный номер) пользователя
+ var currentUid = null;  
+ firebase.auth().onAuthStateChanged(function(user) {  
+  // Слушатель onAuthStateChanged срабатывает каждый раз когда токен пользователя меняется
+  // Это может случиться когда уже новый пользователь логинится, например.
+  // Или это также может случиться когда токен пользователя истек
+  if (user && user.uid != currentUid) {  
+    // Обноваляем UI когда новый пользователь логинится
+    // В другом случае игнорируем если это обновление токена
+    // Обновляем UID текущего пользователя 
+   currentUid = uid;  
+  } else {  
+    // Операция выхода из приложения. Переустанавливает UID текущего пользователя
+   currentUid = null;  
+  }  
+ });  
+ </script>  
+ <h1>Поздравляю! Все прошло успешно! Теперь давай изучать что-нибудь еще по Firebase.</h1>  
+ </html>
