@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +43,12 @@ public class GraphicActivity extends AppCompatActivity {
 
     public static Handler h;
 
+
+    int forDevision = 0;
+    int forAvarageBpm = 0;
+
+    TextView bpmTV;
+
     private static final int REQUEST_ENABLE_BT = 1;
     private  static final int RECIEVE_MESSAGE = 1;
     private BluetoothAdapter btAdapter = null;
@@ -65,6 +72,7 @@ public class GraphicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_graphic);
         myRef = FirebaseDatabase.getInstance().getReference();
         graph = (GraphView)findViewById(R.id.graph_graph_activity);
+        bpmTV = (TextView)findViewById(R.id.bmp_txt);
 
         series = new LineGraphSeries<>(new DataPoint[]{});
         graph.addSeries(series);
@@ -92,83 +100,52 @@ public class GraphicActivity extends AppCompatActivity {
                         sb.append(strIncom);
                         if (sb.length()>4)
                         {
-                            try {
-
-//                            -----------OLD CODE---------------
-                                /*int g = sb.indexOf("S")+1;
-                                String result = sb.substring(0, g);
-                                sb.delete(0, g);
-                                String pulse = result.substring(1, g-1);
-                                if (Integer.parseInt(pulse)<1024)
-                                {
-                                    GlobalVar.visual = Integer.parseInt(pulse);
-                                    myRef.child(user.getUid()).child("HeartRate").child(dateOnString).child(String.valueOf(iCount)).setValue(Integer.parseInt(pulse));
-                                    if (iCount==101)
-                                    {
-                                        iCount=0;
-                                    }
-
-                                    myRef.child(user.getUid()).child("Example").child(String.valueOf(iCount))
-                                            .setValue(Integer.parseInt(pulse));
-                                    lastXPoint++;
-                                    iCount++;
-                                    series.appendData(new DataPoint(lastXPoint, Integer.parseInt(pulse)), true, 1023);
-                                }
-                                break;*/
-//                              -------END of OLD CODE----------
-
-                                int s = sb.indexOf("S");
-                                int b = sb.indexOf("B");
-                                int o = sb.indexOf("O");
-                                int c = sb.indexOf("C");
-                                int f = sb.indexOf("F");
-
-                                if (s>b && s>o && s>c && s>f)
-                                {
-                                    String pulse = getDateFromSubString("S");
-                                    if (Integer.parseInt(pulse)<1024)
-                                    {
-//                                    myRef.child(user.getUid()).child("HeartRate").child(dateOnString).child(String.valueOf(iCount)).setValue(Integer.parseInt(pulse));
-                                        if (iCount==101)
-                                        {
-                                            iCount=0;
-                                        }
-
-                                        myRef.child(user.getUid()).child("Example").child(String.valueOf(iCount))
-                                                .setValue(Integer.parseInt(pulse));
-                                        lastXPoint++;
-                                        iCount++;
-                                        series.appendData(new DataPoint(lastXPoint, Integer.parseInt(pulse)), true, 1023);
-                                    }
-                                }
-
-                                else if (b>s && b>o && b>c && b>f)
-                                {
-                                    String pulse = getDateFromSubString("B");
-                                    if (Integer.parseInt(pulse)<1024)
-                                    {
-                                        GlobalVar.visual = Integer.parseInt(pulse);
-//                                    myRef.child(user.getUid()).child("HeartRate").child(dateOnString).child(String.valueOf(iCount)).setValue(Integer.parseInt(pulse));
-                                        if (iCount==101)
-                                        {
-                                            iCount=0;
-                                        }
-
-                                        myRef.child(user.getUid()).child("Example").child(String.valueOf(iCount))
-                                                .setValue(Integer.parseInt(pulse));
-                                        lastXPoint++;
-                                        iCount++;
-                                        series.appendData(new DataPoint(lastXPoint, Integer.parseInt(pulse)), true, 1023);
-                                    }
-                                }
-
-
-                                break;
-                            }
-                            catch (Exception e)
+                            int endOfMessage = sb.indexOf("S")+1;
+                            int endOfPrefixCode = sb.indexOf("G");
+                            String results = sb.substring(0, endOfMessage);
+                            sb.delete(0, endOfMessage);
+                            String prefix = results.substring(1, endOfPrefixCode);
+                            String date = results.substring(endOfPrefixCode, endOfMessage-1);
+                            if (prefix.equals("graph"))
                             {
-
+                                try
+                                {
+                                    if (Integer.parseInt(date)<1024)
+                                    {
+                                        myRef.child(user.getUid()).child("HeartRate").child(dateOnString).child(String.valueOf(iCount)).setValue(Integer.parseInt(date));
+                                        if (iCount==101)
+                                        {
+                                            iCount=0;
+                                        }
+                                        myRef.child(user.getUid()).child("Example").child(String.valueOf(iCount))
+                                                .setValue(Integer.parseInt(date));
+                                        lastXPoint++;
+                                        iCount++;
+                                        series.appendData(new DataPoint(lastXPoint, Integer.parseInt(date)), true, 1023);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    myRef.child("Errors").child("graphDate").push().setValue(results);
+                                }
                             }
+                            else if (prefix.equals("bpm"))
+                            {
+                                try
+                                {
+                                    int dateBPM=Integer.parseInt(date);
+                                    bpmTV.setText(date);
+                                    forAvarageBpm = forAvarageBpm+dateBPM;
+                                    forDevision++;
+                                    int avarageBPM = forAvarageBpm/forDevision;
+                                    myRef.child(user.getUid()).child("BPM").child("Avarage").setValue(avarageBPM);
+                                }
+                                catch (Exception e)
+                                {
+                                    myRef.child("Errors").child("BPM").push().setValue(results);
+                                }
+                            }
+                            break;
                         }
                 }
             };
@@ -219,18 +196,18 @@ public class GraphicActivity extends AppCompatActivity {
         mConnectedThread.start();
     }
 
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//
-//        Log.d(TAG, "...In onPause()...");
-//
-//        try     {
-//            btSocket.close();
-//        } catch (IOException e2) {
-//            errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
-//        }
-//    }
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        Log.d(TAG, "...In onPause()...");
+
+        try     {
+            btSocket.close();
+        } catch (IOException e2) {
+            errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
+        }
+    }
 
     private void checkBTState() {
         if(btAdapter==null) {
@@ -349,16 +326,4 @@ public class GraphicActivity extends AppCompatActivity {
         mConnectedThread = new ConnectedThread(btSocket);
         mConnectedThread.start();
     }
-
-
-    public String getDateFromSubString(String index)
-    {
-        int g = sb.indexOf(index)+1;
-        String result = sb.substring(0, g);
-        sb.delete(0, g);
-        String pulse = result.substring(1, g-1);
-        return pulse;
-    }
-
-
 }

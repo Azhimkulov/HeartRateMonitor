@@ -4,12 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp"
     tools:context="com.example.azamat.heartbeatratemanager.GraphicActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="#000"
+        android:textAlignment="center"
+        android:layout_weight="27"
+        android:id="@+id/bmp_txt"/>
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/graph_graph_activity"/>
+        android:id="@+id/graph_graph_activity"
+        android:layout_weight="1"/>
 
 </LinearLayout>

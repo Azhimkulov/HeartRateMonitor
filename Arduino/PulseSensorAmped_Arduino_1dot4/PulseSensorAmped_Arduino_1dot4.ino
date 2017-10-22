@@ -24,19 +24,25 @@ void loop() {
 
    Signal = analogRead(pulsePin);
 
+   Serial.print('P');
+   Serial.print("graph");
+   
    Serial.print('G');
    Serial.print(Signal);
    Serial.print('S');
 
    if(QS == true)
-   {;
-//      Serial.print('G');
-//      Serial.print(BPM);
-//      Serial.print('B');
+   {
+      delay(100);
+      
+      Serial.print('P');
+      Serial.print("bpm");
+      
+      Serial.print('G');
+      Serial.print(BPM);
+      Serial.print('S');
       QS = false;
    }
 
    delay(100);
 }
-
-
