@@ -98,54 +98,60 @@ public class GraphicActivity extends AppCompatActivity {
                         byte[] readBuf = (byte[]) msg.obj;
                         String strIncom = new String(readBuf, 0, msg.arg1);
                         sb.append(strIncom);
-                        if (sb.length()>4)
+                        try
                         {
-                            int endOfMessage = sb.indexOf("S")+1;
-                            int endOfPrefixCode = sb.indexOf("G");
-                            String results = sb.substring(0, endOfMessage);
-                            sb.delete(0, endOfMessage);
-                            String prefix = results.substring(1, endOfPrefixCode);
-                            String date = results.substring(endOfPrefixCode, endOfMessage-1);
-                            if (prefix.equals("graph"))
+                            if (sb.length()>5)
                             {
-                                try
+                                int endOfMessage = sb.indexOf("S")+1;
+                                String results = sb.substring(0, endOfMessage);
+                                sb.delete(0, endOfMessage);
+                                String prefix = results.substring(endOfMessage-2, endOfMessage-1);
+                                String data = results.substring(1, endOfMessage-2);
+                                if (prefix.equals("E"))
                                 {
-                                    if (Integer.parseInt(date)<1024)
+                                    try
                                     {
-                                        myRef.child(user.getUid()).child("HeartRate").child(dateOnString).child(String.valueOf(iCount)).setValue(Integer.parseInt(date));
-                                        if (iCount==101)
+                                        if (Integer.parseInt(data)<1024)
                                         {
-                                            iCount=0;
+                                            myRef.child(user.getUid()).child("HeartRate").child(dateOnString).child(String.valueOf(iCount)).setValue(Integer.parseInt(data));
+                                            if (iCount==101)
+                                            {
+                                                iCount=0;
+                                            }
+                                            myRef.child(user.getUid()).child("Example").child(String.valueOf(iCount))
+                                                    .setValue(Integer.parseInt(data));
+                                            lastXPoint++;
+                                            iCount++;
+                                            series.appendData(new DataPoint(lastXPoint, Integer.parseInt(data)), true, 1023);
                                         }
-                                        myRef.child(user.getUid()).child("Example").child(String.valueOf(iCount))
-                                                .setValue(Integer.parseInt(date));
-                                        lastXPoint++;
-                                        iCount++;
-                                        series.appendData(new DataPoint(lastXPoint, Integer.parseInt(date)), true, 1023);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        myRef.child("Errors").child("graphDate").push().setValue(results);
                                     }
                                 }
-                                catch (Exception e)
+                                else if (prefix.equals("B"))
                                 {
-                                    myRef.child("Errors").child("graphDate").push().setValue(results);
+                                    try
+                                    {
+                                        int dateBPM=Integer.parseInt(data);
+                                        bpmTV.setText("Avargae: "+data+" BPM");
+                                        forAvarageBpm = forAvarageBpm+dateBPM;
+                                        forDevision++;
+                                        int avarageBPM = forAvarageBpm/forDevision;
+                                        myRef.child(user.getUid()).child("BPM").child("Avarage").setValue(avarageBPM);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        myRef.child("Errors").child("BPM").push().setValue(results);
+                                    }
                                 }
+                                break;
                             }
-                            else if (prefix.equals("bpm"))
-                            {
-                                try
-                                {
-                                    int dateBPM=Integer.parseInt(date);
-                                    bpmTV.setText(date);
-                                    forAvarageBpm = forAvarageBpm+dateBPM;
-                                    forDevision++;
-                                    int avarageBPM = forAvarageBpm/forDevision;
-                                    myRef.child(user.getUid()).child("BPM").child("Avarage").setValue(avarageBPM);
-                                }
-                                catch (Exception e)
-                                {
-                                    myRef.child("Errors").child("BPM").push().setValue(results);
-                                }
-                            }
-                            break;
+                        }
+                        catch (Exception e)
+                        {
+                            myRef.child("Errors").child("unknown").push().setValue(String.valueOf(sb));
                         }
                 }
             };
