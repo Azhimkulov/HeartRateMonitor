@@ -5,7 +5,7 @@
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
-    var ref = new Firebase("https://heartbeatratemanager.firebaseio.com/");
+    var ref = new Firebase("https://heartbeatratemanager.firebaseio.com/LOrpGTVX28cdxcwWC4gVRX0GUKE3");
 // Attach an asynchronous callback to read the data at our posts reference
 
     ref.on("value", function(snapshot) {
@@ -14,12 +14,17 @@
         var list = [];
         var rate = 0;
 
-        var link = telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.Example;
+        // var link = telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.Example;
+        var link = telo.Example;
 
-        var name = JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.name);
-        var surname = JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.surname);
+        // var name = JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.name);
+        var name = JSON.stringify(telo.PersonDate.name);
+        // var surname = JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.surname);
+        var surname = JSON.stringify(telo.PersonDate.surname);
 
-        var birthDay = JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.birthDay)+JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.birthMonth)+JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.birthYear);
+
+        // var birthDay = JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.birthDay)+JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.birthMonth)+JSON.stringify(telo.LOrpGTVX28cdxcwWC4gVRX0GUKE3.PersonDate.birthYear);
+        var birthDay = JSON.stringify(telo.PersonDate.birthDay)+JSON.stringify(telo.PersonDate.birthMonth)+JSON.stringify(telo.PersonDate.birthYear);
         document.getElementById("teloName").innerHTML = name;
         document.getElementById("teloSurname").innerHTML = surname;
         document.getElementById("teloBirthday").innerHTML = birthDay;

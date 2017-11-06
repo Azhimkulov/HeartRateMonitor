@@ -53,6 +53,14 @@
         android:text="Überwachungseinrichtung"
         android:id="@+id/btn_serial_monitor_proom"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"
+        android:layout_marginBottom="@dimen/mrgn_et_auth"
+        android:background="@drawable/btn_middle"
+        android:text="Saubern"
+        android:id="@+id/btn_delete_proom"/>
 
     <LinearLayout
         android:layout_width="match_parent"
